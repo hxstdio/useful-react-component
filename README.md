@@ -1,2 +1,13 @@
-# useful-react-component
-some useful react components
+> 收集的一些可以复用的组件，做项目时可以开箱即食
+
+### 基建
+
+1. 需要一个脚手架，快速搭建项目骨架；
+2. 工程化，考虑grunt + webpack；
+3. 需要有单元测试；
+    - Enzume
+4. 有demo;
+
+### 规划
+
+TODO
