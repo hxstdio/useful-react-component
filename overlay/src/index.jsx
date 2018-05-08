@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, addons } from 'react';
 import PropTypes from 'prop-types';
-import Portal from '../../portal/src/index';
+import Portal from '@urc/portal/src/index.jsx';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import './index.scss';
 
 /**
@@ -59,10 +60,128 @@ class Overlay extends Component {
 
   constructor(props) {
     super(props);
+    this.onClickHandle = this.onClickHandle.bind(this);
+
+    this.state = {
+      show: false
+    }
+  }
+
+  componentDidMount() {
+    const { show } = this.state;
+
+    if (show) {
+      this.applyAutoLockScrolling(show);
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    const { show } = this.state;
+
+    if (show !== nextState.show) {
+      this.applyAutoLockScrolling(nextState.show);
+    }
+  }
+
+  componentWillUnmount() {
+    const { show } = this.state;
+
+    if (show) {
+      this.allowScrolling();
+    }
+  }
+
+  applyAutoLockScrolling(show) {
+    const { isLockScrolling } = this.props;
+
+    if (isLockScrolling) {
+      if (show) {
+        this.preventScrolling();
+      } else {
+        this.allowScrolling();
+      }
+    }
+  }
+
+  preventTouchMoveDefault(e) {
+    e.preventDefault();
+  }
+
+  /**
+   * 设置蒙层组件显示
+   */
+  show () {
+    this.setState({
+      show: true
+    });
+  }
+
+  /**
+   * 设置蒙层组件隐藏
+   */
+  hide () {
+    this.setState({
+      show: false
+    });
+  }
+
+  /**
+   * 切换蒙层组件显示状态
+   */
+  toggle () {
+    const { show } = this.state;
+
+    this.setState({
+      show: !show
+    });
+  }
+
+  preventScrolling() {
+    document.body.addEventListener('touchmove', this.preventTouchMoveDefault, { passive: false });
+  }
+
+  allowScrolling() {
+    document.body.removeEventListener('touchmove', this.preventTouchMoveDefault, { passive: false });
+  }
+
+  /**
+   * 点击蒙层时的回调函数
+   * @param e
+   */
+  onClickHandle(e) {
+    const { onClickCb } = this.props;
+    onClickCb(e);
   }
 
   render() {
-    return null;
+    const { isUseAnim, animDuration, zIndex, isUsePortal, containerClassName } = this.props;
+    const { show } = this.state;
+    const addStyle = {
+      zIndex,
+      transitionDuration: `${animDuration / 1000}s`
+    };
+
+    const overlay = <div
+      onClick={this.onClickHandle}
+      style={addStyle}
+      className={`overlay ${containerClassName}`}>&nbsp;</div>;
+
+    const overlayWithAnim = isUseAnim ? (
+      <ReactCSSTransitionGroup
+        transitionName="overlay"
+        transitionAppear={true}
+        transitionAppearTimeout={animDuration}
+        transitionEnterTimeout={animDuration}
+        transitionLeaveTimeout={animDuration}>
+        { overlay }
+      </ReactCSSTransitionGroup>
+    ) : overlay;
+
+    const overlayWithPortal = isUsePortal ? (
+      <Portal>{ overlayWithAnim }</Portal>
+    ) : overlayWithAnim;
+
+    return show ? overlayWithPortal : null;
   }
 }
 

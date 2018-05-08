@@ -7,7 +7,10 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
+        exclude: function (filePath) {
+          // node_modules中@urc域下的模块需要被打包进来
+          return (/node_modules/.test(filePath) && !/@urc/.test(filePath));
+        },
         use: {
           loader: 'babel-loader',
           options: {

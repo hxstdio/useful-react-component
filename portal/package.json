@@ -1,6 +1,6 @@
 {
-  "name": "portal",
-  "version": "0.1.0",
+  "name": "@urc/portal",
+  "version": "0.1.1",
   "scripts": {
     "dev": "webpack-dev-server --open",
     "build": "webpack -p"

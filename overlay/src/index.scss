@@ -1,1 +1,38 @@
-// write scss code here
+@charset "UTF-8";
+
+.overlay {
+  position: fixed;
+  top: -100px;
+  left: 0;
+  bottom: -100px;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.overlay-enter {
+  opacity: 0.01;
+
+  &.overlay-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+  }
+}
+
+.overlay-leave {
+  opacity: 1;
+
+  &.overlay-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+  }
+}
+
+.overlay-appear {
+  opacity: 0.01;
+
+  &.overlay-appear-active {
+    opacity: 1;
+    transition: opacity .5s ease-in;
+  }
+}
+
