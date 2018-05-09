@@ -28,7 +28,7 @@ class Demo extends Component {
         <Overlay
           ref={e => this.overlay = e}
           animDuration={300}
-          onClickCb={this.hide}
+          onTouchTapCb={this.hide}
           isUseAnim
           isUsePortal
         />

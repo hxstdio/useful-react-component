@@ -2,6 +2,9 @@ import React, { Component, addons } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@urc/portal/src/index.jsx';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
 import './index.scss';
 
 /**
@@ -45,7 +48,7 @@ class Overlay extends Component {
     /**
      * 点击蒙层时的回调
      */
-    onClickCb: PropTypes.func
+    onTouchTapCb: PropTypes.func
   }
 
   static defaultProps = {
@@ -55,12 +58,12 @@ class Overlay extends Component {
     zIndex: 9999,
     isUsePortal: false,
     containerClassName: '',
-    onClickCb: () => {}
+    onTouchTapCb: () => {}
   }
 
   constructor(props) {
     super(props);
-    this.onClickHandle = this.onClickHandle.bind(this);
+    this.onTouchTapHandle = this.onTouchTapHandle.bind(this);
 
     this.state = {
       show: false
@@ -148,9 +151,9 @@ class Overlay extends Component {
    * 点击蒙层时的回调函数
    * @param e
    */
-  onClickHandle(e) {
-    const { onClickCb } = this.props;
-    onClickCb(e);
+  onTouchTapHandle(e) {
+    const { onTouchTapCb } = this.props;
+    onTouchTapCb(e);
   }
 
   render() {
@@ -162,7 +165,7 @@ class Overlay extends Component {
     };
 
     const overlay = <div
-      onClick={this.onClickHandle}
+      onTouchTap={this.onTouchTapHandle}
       style={addStyle}
       className={`overlay ${containerClassName}`}>&nbsp;</div>;
 
