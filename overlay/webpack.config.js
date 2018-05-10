@@ -1,3 +1,5 @@
+const pwd = process.cwd();
+
 module.exports = {
   entry: './demo/index.jsx',
   output: {
@@ -23,5 +25,10 @@ module.exports = {
         use: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
+  },
+  resolve: {
+    alias: {
+      'vendor': pwd + '/vendor'
+    }
   }
 };

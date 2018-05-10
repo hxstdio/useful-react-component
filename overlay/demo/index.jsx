@@ -22,7 +22,7 @@ class Demo extends Component {
     return (
       <div className="demo">
         <div className="btn-container">
-          <div text="显示蒙层" onClick={this.show}>显示蒙层</div>
+          <div className="button" onClick={this.show}>显示蒙层</div>
         </div>
 
         <Overlay
