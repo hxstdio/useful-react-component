@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { LOADING  } from './svg.base64.js';
 import ReactDOM from 'react-dom';
 
 // 引入tap插件
@@ -62,10 +63,10 @@ class Loading extends Component {
   static defaultProps = {
     initShow: false,
     type: 'fullPage',
-    width: 0,
-    height: 0,
-    aniWidth: 0,
-    aniHeight: 0,
+    width: 20,
+    height: 20,
+    aniWidth: 75,
+    aniHeight: 75,
     opacity: 0.2,
     mask: false
   }
@@ -107,10 +108,60 @@ class Loading extends Component {
     });
   }
 
+  /**
+   * 渲染行内loading
+   * @returns {XML}
+   */
+  renderPartLoading() {
+    const { width, height } = this.props;
+    const style = {
+      backgroundImage: `url(${LOADING})`,
+      width: this.px2rem(width),
+      height: this.px2rem(height)
+    };
 
+    return <i style={style} className="svg-part-loading"></i>
+  }
+
+  /**
+   * 渲染全页loading
+   * @returns {*}
+   */
+  renderPageLoading() {
+    const { width, height, aniWidth, aniHeight, opacity, mask } = this.props;
+    const style = {
+      width: this.px2rem(width),
+      height: this.px2rem(height),
+      backgroundColor: `rgba(0, 0, 0, ${opacity})`
+    };
+
+    const svgStyle = {
+      width: this.px2rem(aniWidth),
+      height: this.px2rem(aniHeight)
+    }
+
+    const pageLoading = <div className="svg-page-loading" style={style}>
+      <img className="svg-loading" src={LOADING} style={svgStyle} />
+    </div>;
+
+    return mask ? (
+      <div className="page-loading-mask">
+        { pageLoading }
+      </div>
+      ) : (
+        { pageLoading }
+      )
+  }
 
   render() {
-    return null;
+    const { show: propsShow,type } = this.props;
+    const { show: stateShow } = this.state;
+    const show = typeof propsShow === 'boolean' ? propsShow : stateShow;
+    if(!show){
+      return null;
+    }
+
+    return type === 'part' ? this.renderPartLoading() : this.renderPageLoading();
   }
 }
 

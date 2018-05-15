@@ -2,3 +2,50 @@
 @import "~vendor/scss/mixins.scss";
 
 // write your scss code here
+.page-loading-mask {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+}
+
+.svg-page-loading {
+  position: fixed;
+  z-index: 10000;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+  border-radius: rem(24);
+  -webkit-border-radius: rem(24);
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+
+  justify-content: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+
+  align-items: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+
+  background-color: rgba(0, 0, 0, .2);
+  width: rem(150);
+  height: rem(150);
+
+  .svg-loading{
+    width: rem(75);
+    height: rem(75);
+  }
+}
+
+.svg-part-loading{
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
