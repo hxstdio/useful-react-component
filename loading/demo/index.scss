@@ -2,3 +2,9 @@
 @import "~vendor/scss/mixins.scss";
 
 // write your scss code here
+.show-btn {
+  height: rem(30);
+  line-height: rem(30);
+  text-align: center;
+  font-size: rem(24);
+}

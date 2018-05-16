@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MyComponent from '../src/index.jsx';
+import PageDemo from './pageDemo.jsx';
 
 ReactDOM.render(
-  <MyComponent />,
+  <PageDemo />,
   document.querySelector('#wrapper')
 );

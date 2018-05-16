@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { LOADING  } from './svg.base64.js';
-import ReactDOM from 'react-dom';
 
 // 引入tap插件
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -62,7 +61,7 @@ class Loading extends Component {
 
   static defaultProps = {
     initShow: false,
-    type: 'fullPage',
+    type: 'page',
     width: 20,
     height: 20,
     aniWidth: 75,
@@ -149,7 +148,7 @@ class Loading extends Component {
         { pageLoading }
       </div>
       ) : (
-        { pageLoading }
+        pageLoading
       )
   }
 
