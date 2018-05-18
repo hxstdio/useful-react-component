@@ -1,30 +1,45 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import Loading from '../src/index.jsx';
 import './index.scss';
 
 export default class PageDemo extends Component {
   constructor(props){
     super(props);
-    this.onBtnClick = this.onBtnClick.bind(this);
+    this.onPageBtnClick = this.onPageBtnClick.bind(this);
+    this.onPartBtnClick = this.onPartBtnClick.bind(this);
+
     this.state = {
-      show: false
+      pageLoadingShow: false,
+      partLoadingShow: false
     }
   }
 
-  onBtnClick() {
+  onPageBtnClick() {
+    const { pageLoadingShow } = this.state;
     this.setState({
-      show: true
+      pageLoadingShow: !pageLoadingShow
+    });
+  }
+
+  onPartBtnClick() {
+    const { partLoadingShow } = this.state;
+    this.setState({
+      partLoadingShow: !partLoadingShow
     });
   }
 
   render() {
-    const { show } = this.state;
+    const { pageLoadingShow, partLoadingShow } = this.state;
 
     return <section>
-      <div className="show-btn" onClick={this.onBtnClick}>显示Loading</div>
+      <div className="show-btn" onClick={this.onPageBtnClick}>显示全页Loading</div>
+      <div className="show-btn" onClick={this.onPartBtnClick}>显示行内Loading</div>
       <Loading
-        show={show}
+        show={partLoadingShow}
+        type="part"
+      />
+      <Loading
+        show={pageLoadingShow}
         width={175}
         height={175}
         aniWidth={75}

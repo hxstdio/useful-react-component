@@ -3,8 +3,14 @@
 
 // write your scss code here
 .show-btn {
-  height: rem(30);
-  line-height: rem(30);
+  height: rem(60);
+  line-height: rem(60);
   text-align: center;
-  font-size: rem(24);
+  font-size: rem(28);
+
+  margin-bottom: rem(10);
+  padding:rem(10);
+  border-radius: rem(6);
+
+  border: 1px solid #333;
 }
