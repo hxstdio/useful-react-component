@@ -65,7 +65,7 @@ export const utils = (function () {
   }
 
   me.prefixPointEvent = (pointerEvent) => {
-    return window.MSPointerEvent ? `MSPointer${pointerEvent.charAt(7).toUpperCase() + pointerEvent.substr(8)}`;
+    return window.MSPointerEvent ? `MSPointer${pointerEvent.charAt(7).toUpperCase()}${pointerEvent.substr(8)}` : pointerEvent;
   }
 
   me.momentum = (current, start, time, lowerMargin, wrapperSize, deceleration=0.0006) => {
