@@ -45,12 +45,12 @@ export const utils = (function () {
   }
 
   // 获取当前时间
-  me.getTime = Date.now || () => { return new Date().getTime(); }
+  me.getTime = Date.now || function() { return new Date().getTime(); }
 
   // 对象继承
   me.extend = (target, obj) => {
     for(let i in obj){
-      target[i] = obj[j];
+      target[i] = obj[i];
     }
   }
 

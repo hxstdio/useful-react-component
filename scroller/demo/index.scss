@@ -2,3 +2,14 @@
 @import "~vendor/scss/mixins.scss";
 
 // write your scss code here
+.horizontal-wrapper{
+  width: rem(500);
+  border: 1px solid #666;
+}
+
+.horizontal-view{
+  width: rem(1000);
+  height: rem(100);
+  line-height: rem(100);
+  background: #f2f3f4;
+}
