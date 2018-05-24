@@ -113,15 +113,15 @@ class Scroller extends Component {
   resetContainer() {
     const { scroller, wrapper } = this.refs;
     const { clientHeight, clientWidth } = wrapper;
-    const { scrollerHeight, scrollerWidth } = scroller;
+    const { scrollHeight, scrollWidth } = scroller;
 
     this.scroller = scroller;
     this.scrollerStyle = scroller.style;
 
     this.wrapperHeight = clientHeight;
     this.wrapperWidth = clientWidth;
-    this.maxOffsetY = Math.min(clientHeight - scrollerHeight, 0);
-    this.maxOffsetX = Math.min(clientWidth - scrollerWidth, 0);
+    this.maxOffsetY = Math.min(clientHeight - scrollHeight, 0);
+    this.maxOffsetX = Math.min(clientWidth - scrollWidth, 0);
   }
 
   start(event) {

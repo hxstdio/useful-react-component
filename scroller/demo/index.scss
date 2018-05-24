@@ -1,10 +1,52 @@
 @charset "UTF-8";
+@import "~vendor/scss/reset.scss";
 @import "~vendor/scss/mixins.scss";
 
 // write your scss code here
+
+body{
+  background: #f2f3f4;
+  padding: rem(10);
+}
+
 .horizontal-wrapper{
-  width: rem(500);
-  border: 1px solid #666;
+  width: rem(600);
+  margin: auto;
+}
+
+.vertical-wrapper{
+  width: 100%;
+  height: rem(600);
+}
+
+.vertical-list{
+  text-align: center;
+  width: 50%;
+  margin: 0 auto;
+
+  .item{
+    line-height: 50px;
+    background-color: #fff;
+    height: 50px;
+    text-align: center;
+    margin-bottom: 2px;
+  }
+}
+
+.hoz-list{
+  text-align: center;
+  width: 100%;
+  margin: 20px auto;
+  white-space: nowrap;
+
+  .item{
+    line-height: 50px;
+    background-color: #fff;
+    height: 50px;
+    display: inline-block;
+    text-align: center;
+    margin-bottom: 2px;
+  }
 }
 
 .horizontal-view{
