@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import Overlay from '@urc/overlay/src/index.jsx';
 import Portal from '@urc/portal/src/index.jsx';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 // 引入tap插件
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -169,7 +169,23 @@ class Dialog extends Component {
 
     onPrimaryTouchTap(e);
 
-    if(typeof show !== 'boolean' && btnAutoClose) {
+    if (typeof show !== 'boolean' && btnAutoClose) {
+      this.setState({
+        show: false
+      });
+    }
+  }
+
+  secondaryTouchTapHandler(e) {
+    const {
+      show,
+      btnAutoClose,
+      onSecondaryTouchTap
+    } = this.props;
+
+    onSecondaryTouchTap();
+
+    if (typeof show !== 'boolean' && btnAutoClose) {
       this.setState({
         show: false
       });
@@ -199,6 +215,7 @@ class Dialog extends Component {
       content,
       footer,
       primaryBtn,
+      secondaryBtn,
       useAnim,
       animDuration,
       zIndex,
@@ -207,14 +224,82 @@ class Dialog extends Component {
       className,
     } = this.props;
 
-    const { show: stateShow } = this.state;
+    const {show: stateShow} = this.state;
     const show = typeof propsShow === 'boolean' ? propsShow : stateShow;
-  }
 
+    const dialogContent = show ? (
+        <div className="m-pop-tips" style={{transitionDuration: `${animDuration / 1000}s`}}>
+          <div className="m-pop-content">
+            {
+              title ? <div className="m-pop-title">{title}</div> : null
+            }
+            {
+              content ? <div className="m-pop-value">{content}</div> : null
+            }
+          </div>
+          <div className="m-pop-footer">{footer}</div>
+          <div className="m-pop-btn">
+            {
+              secondaryBtn && (
+                <div
+                  className="m-btn-cancel"
+                  onTouchTap={this.secondaryTouchTapHandler}
+                >
+                  {secondaryBtn}
+                </div>
+              )
+            }
+            <div
+              className="m-btn-confirm"
+              onTouchTap={this.primaryTouchTapHandler}
+            >
+              {primaryBtn}
+            </div>
+          </div>
+        </div>
+      ) : null;
 
+    const overlayComponent = overlay ? (
+        <Overlay
+          onTouchTapCb={this.overlayTouchTapHandler}
+          isUseAnim={useAnim}
+          animDuration={animDuration}
+          show={show}/>
+      ) : null;
 
-  render() {
-    return null;
+    const wrap = (
+      <div
+        className={`m-dialog ${className}`}
+        style={{zIndex}}
+      >
+        {
+          useAnim ? (
+              <ReactCSSTransitionGroup
+                transitionName="dialog"
+                transitionAppear={true}
+                transitionAppearTimeout={animDuration}
+                transitionEnterTimeout={animDuration}
+                transitionLeaveTimeout={animDuration}>
+                {dialogContent}
+                {overlayComponent}
+              </ReactCSSTransitionGroup>
+            ) : (
+              <div>
+                {dialogContent}
+                {overlayComponent}
+              </div>
+            )
+        }
+      </div>
+    );
+
+    return portal ? (
+      <Portal>
+        {wrap}
+      </Portal>
+    ) : (
+      wrap
+    );
   }
 }
 

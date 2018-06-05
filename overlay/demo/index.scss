@@ -8,9 +8,10 @@
     @include r1-border(#CCC, rem(6));
 
     font-size: rem(28);
-    width: rem(200);
+    width: 100%;
     height: rem(60);
     line-height: rem(60);
     text-align: center;
+    margin-bottom: rem(10);
   }
 }

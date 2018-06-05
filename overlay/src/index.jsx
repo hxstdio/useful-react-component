@@ -16,6 +16,12 @@ class Overlay extends Component {
   static propTypes = {
 
     /**
+     * 是否展示，当show有值时，为受控组件
+     * 不传的情况下，为非受控组件
+     */
+    show: PropTypes.bool,
+
+    /**
      * 是否锁定滚动
      */
     isLockScrolling: PropTypes.bool,
@@ -34,6 +40,11 @@ class Overlay extends Component {
      * 蒙层的z-index值
      */
     zIndex: PropTypes.number,
+
+    /**
+     * 点击是否自动关闭，仅 非受控模式生效
+     */
+    isAutoClose: PropTypes.bool,
 
     /**
      * 是否使用Portal组件，传送Overlay到指定DOM层级
@@ -56,6 +67,7 @@ class Overlay extends Component {
     isUseAnim: true,
     animDuration: 300,
     zIndex: 9999,
+    isAutoClose: false,
     isUsePortal: false,
     containerClassName: '',
     onTouchTapCb: () => {}
@@ -71,7 +83,10 @@ class Overlay extends Component {
   }
 
   componentDidMount() {
-    const { show } = this.state;
+    const { show: propShow } = this.props;
+    const { show: stateShow } = this.state;
+
+    const show = typeof propShow === 'boolean' ? propShow : stateShow;
 
     if (show) {
       this.applyAutoLockScrolling(show);
@@ -79,15 +94,23 @@ class Overlay extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    const { show } = this.state;
+    const { show: propShow } = this.props;
+    const { show: stateShow } = this.state;
 
-    if (show !== nextState.show) {
+    if (typeof propShow === 'boolean') {
+      if (propShow !== nextProps.show) {
+        this.applyAutoLockScrolling(nextProps.show);
+      }
+    } else if (stateShow !== nextState.show) {
       this.applyAutoLockScrolling(nextState.show);
     }
   }
 
   componentWillUnmount() {
-    const { show } = this.state;
+    const { show: propShow } = this.props;
+    const { show: stateShow } = this.state;
+
+    const show = typeof propShow === 'boolean' ? propShow : stateShow;
 
     if (show) {
       this.allowScrolling();
@@ -152,17 +175,27 @@ class Overlay extends Component {
    * @param e
    */
   onTouchTapHandle(e) {
-    const { onTouchTapCb } = this.props;
+    const { show: propShow, isAutoClose, onTouchTapCb } = this.props;
+
+    // 非受控模式下，点击时判断是否要自动关闭
+    if (typeof propShow !== 'boolean' && isAutoClose) {
+      this.setState({
+        show: false
+      });
+    }
+
     onTouchTapCb(e);
   }
 
   render() {
-    const { isUseAnim, animDuration, zIndex, isUsePortal, containerClassName } = this.props;
-    const { show } = this.state;
+    const { show: propShow, isUseAnim, animDuration, zIndex, isUsePortal, containerClassName } = this.props;
+    const { show: stateShow } = this.state;
     const addStyle = {
       zIndex,
       transitionDuration: `${animDuration / 1000}s`
     };
+
+    const show = typeof propShow === 'boolean' ? propShow : stateShow;
 
     const overlay = <div
       onTouchTap={this.onTouchTapHandle}
