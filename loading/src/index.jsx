@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { LOADING  } from './svg.base64.js';
 
-// 引入tap插件
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
-
 import './index.scss';
 
 class Loading extends Component {

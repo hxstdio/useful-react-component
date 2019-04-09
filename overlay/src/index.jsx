@@ -2,8 +2,6 @@ import React, { Component, addons } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@urc/portal/src/index.jsx';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
 
 import './index.scss';
 

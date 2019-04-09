@@ -4,10 +4,6 @@ import Overlay from '@urc/overlay/src/index.jsx';
 import Portal from '@urc/portal/src/index.jsx';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-// 引入tap插件
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
-
 import './index.scss';
 
 const NOOP = () => {};

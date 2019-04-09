@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import './index.scss';
+// import './index.scss';
 
 class Portal extends Component {
 
